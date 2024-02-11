@@ -1,5 +1,6 @@
-package com.zughead.reviewengine.security.user;
+package com.zughead.reviewengine.persistence.repository;
 
+import com.zughead.reviewengine.persistence.entity.User;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 

@@ -1,6 +1,6 @@
 package com.zughead.reviewengine.security.config;
 
-import com.zughead.reviewengine.security.user.UserRepository;
+import com.zughead.reviewengine.persistence.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -40,6 +40,7 @@ public class AppConfig {
     return config.getAuthenticationManager();
   }
 
+  @Bean
   public PasswordEncoder passwordEncoder() {
     return new BCryptPasswordEncoder();
   }

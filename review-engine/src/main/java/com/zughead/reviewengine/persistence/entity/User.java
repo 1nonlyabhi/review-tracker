@@ -1,5 +1,6 @@
-package com.zughead.reviewengine.security.user;
+package com.zughead.reviewengine.persistence.entity;
 
+import com.zughead.reviewengine.security.user.Role;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -39,6 +40,12 @@ public class User implements UserDetails {
 
   @Column(nullable = false)
   private String password;
+
+  //  @Column(nullable = false)
+  //  private ZonedDateTime lastLoggedInDtUTC;
+  //
+  //  @Column(nullable = false)
+  //  private ZonedDateTime createdDtUTC;
 
   @Enumerated(EnumType.STRING)
   private Role role;

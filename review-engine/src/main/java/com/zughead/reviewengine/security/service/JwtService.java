@@ -1,4 +1,4 @@
-package com.zughead.reviewengine.security.config;
+package com.zughead.reviewengine.security.service;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
