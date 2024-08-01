@@ -1,5 +1,6 @@
 package com.zughead.reviewengine.security.config;
 
+import com.zughead.reviewengine.persistence.repository.TokenRepository;
 import com.zughead.reviewengine.security.service.JwtService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -21,6 +22,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 public class JwtAuthFilter extends OncePerRequestFilter {
 
   @Autowired private JwtService jwtService;
+  @Autowired private TokenRepository tokenRepository;
   @Autowired private UserDetailsService userDetailsService;
 
   @Override
@@ -38,7 +40,12 @@ public class JwtAuthFilter extends OncePerRequestFilter {
     final String userEmail = jwtService.extractEmail(jwt);
     if (userEmail != null && SecurityContextHolder.getContext().getAuthentication() == null) {
       UserDetails userDetails = this.userDetailsService.loadUserByUsername(userEmail);
-      if (jwtService.isTokenValid(jwt, userDetails)) {
+      boolean isValidToken =
+          tokenRepository
+              .findByToken(jwt)
+              .map(token -> !token.isExpired() && !token.isRevoked())
+              .orElse(false);
+      if (jwtService.isTokenValid(jwt, userDetails) && isValidToken) {
         UsernamePasswordAuthenticationToken authToken =
             new UsernamePasswordAuthenticationToken(
                 userDetails, null, userDetails.getAuthorities());
